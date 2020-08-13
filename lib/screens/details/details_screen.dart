@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:games_end/constants.dart';
-import 'package:games_end/models/game.dart';
+import 'package:games_end/models/game.model.dart';
 
 import 'components/body.dart';
 

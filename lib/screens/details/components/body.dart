@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games_end/models/game.dart';
+import 'package:games_end/models/game.model.dart';
 
 import '../../../constants.dart';
 import 'chat_and_add_to_cart.dart';

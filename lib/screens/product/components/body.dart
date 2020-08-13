@@ -1,18 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:games_end/components/search_box.dart';
 import 'package:games_end/constants.dart';
-import 'package:games_end/models/game.dart';
+import 'package:games_end/models/game.model.dart';
+import 'package:games_end/models/gamesPagination.model.dart';
 import 'package:games_end/screens/details/details_screen.dart';
-import 'package:games_end/services/games.dart';
+import 'package:games_end/screens/product/controllers/body.control.dart';
+import 'package:games_end/services/games.service.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'category_list.dart';
 import 'product_card.dart';
 
-class Body extends StatelessWidget {
-  Future<List<Game>> futureListSection;
+class Body extends StatefulWidget {
+  const Body();
 
-  Future<List<Game>> getSectionList() {
-    return GamesService.list();
+  @override
+  State<StatefulWidget> createState() {
+    return BodyState();
+  }
+}
+
+class BodyState extends State<Body> {
+  BodyControl controller;
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    controller = new BodyControl(10);
+
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        controller.loadMore();
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -38,7 +60,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
                 ),
-                productList()
+                gamesList()
               ],
             ),
           ),
@@ -47,8 +69,78 @@ class Body extends StatelessWidget {
     );
   }
 
-  productList() {
-    return FutureBuilder<List<Game>>(
+  gamesList() {
+    return StreamBuilder(
+      stream: controller.stream,
+      builder: (BuildContext _context, AsyncSnapshot _snapshot) {
+        if (_snapshot.connectionState == ConnectionState.waiting) {
+          return ListView.builder(
+            itemCount: 10,
+            // Important code
+            itemBuilder: (context, index) => Shimmer.fromColors(
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.white,
+                child: ProductCard(
+                  itemIndex: index,
+                  game: new Game(
+                      id: 0,
+                      background_image:
+                          "https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg",
+                      name: "name"),
+                  press: () {},
+                )),
+          );
+        } else if (_snapshot.hasData && _snapshot.data.length != 0) {
+          return RefreshIndicator(
+            onRefresh: controller.refresh,
+            child: ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                controller: scrollController,
+                itemCount: _snapshot.data.length + 1,
+                itemBuilder: (BuildContext _context, int index) {
+                  if (index < _snapshot.data.length) {
+                    return ProductCard(
+                      itemIndex: index,
+                      game: _snapshot.data[index],
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailsScreen(
+                              product: _snapshot.data[index],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (controller.hasMore) {
+                    return Shimmer.fromColors(
+                        baseColor: Colors.grey[300],
+                        highlightColor: Colors.white,
+                        child: ProductCard(
+                          itemIndex: index,
+                          game: new Game(
+                              id: 0,
+                              background_image:
+                                  "https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design-.jpg",
+                              name: "name"),
+                          press: () {},
+                        ));
+                  } else {
+                    return Container();
+                  }
+                }),
+          );
+        } else {
+          return Center(child: Text("Not found games!"));
+        }
+      },
+    );
+  }
+}
+
+/* 
+return FutureBuilder<List<Game>>(
       future: getSectionList(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
@@ -73,10 +165,4 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-          );
-        else
-          return Text("broken");
-      },
-    );
-  }
-}
+ */

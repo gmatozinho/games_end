@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games_end/models/game.dart';
+import 'package:games_end/models/game.model.dart';
 
 import '../../../constants.dart';
 
@@ -7,12 +7,12 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
     this.itemIndex,
-    this.product,
+    this.game,
     this.press,
   }) : super(key: key);
 
   final int itemIndex;
-  final Game product;
+  final Game game;
   final Function press;
 
   @override
@@ -52,7 +52,7 @@ class ProductCard extends StatelessWidget {
               top: 0,
               right: 0,
               child: Hero(
-                tag: '${product.id}',
+                tag: '${game.id}',
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                   height: 140,
@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
                   width: 180,
                   child: new CircleAvatar(
                       backgroundImage: NetworkImage(
-                    product.background_image,
+                    game.background_image,
                     //fit: BoxFit.cover,
                   )),
                 ),
@@ -82,7 +82,7 @@ class ProductCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: kDefaultPadding),
                       child: Text(
-                        product.name,
+                        game.name,
                         style: Theme.of(context).textTheme.button,
                       ),
                     ),

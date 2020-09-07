@@ -46,7 +46,7 @@ class BodyState extends State<Body> {
             controller.pagination = null;
             controller.data.clear();
             controller.loadMore();
-            scrollController.position.moveTo(0);
+            scrollController.position.moveTo(0, duration: Duration(seconds: 2));
           }),
           //CategoryList(),
           SizedBox(height: kDefaultPadding / 2),

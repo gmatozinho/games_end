@@ -4,7 +4,8 @@ part 'rating.model.g.dart';
 
 @JsonSerializable()
 class Rating {
-  final int id, count, percent;
+  final int id, count;
+  final double percent;
 
   final String title;
 

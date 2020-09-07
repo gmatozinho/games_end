@@ -60,7 +60,9 @@ class ProductCard extends StatelessWidget {
                   width: 180,
                   child: new CircleAvatar(
                       backgroundImage: NetworkImage(
-                    game.background_image,
+                    game.background_image != null
+                        ? game.background_image
+                        : "https://cidadejornal.com.br/portal/img/not-found.png",
                     //fit: BoxFit.cover,
                   )),
                 ),

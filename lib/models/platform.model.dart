@@ -4,9 +4,9 @@ part 'platform.model.g.dart';
 
 @JsonSerializable()
 class Platform {
-  final String name, slug, image, year_end, year_start, image_background;
+  final String name, slug, image, image_background;
 
-  final int id, games_count;
+  final int id, games_count, year_end, year_start;
 
   Platform(this.name, this.slug, this.image, this.year_end, this.year_start,
       this.image_background, this.id, this.games_count);

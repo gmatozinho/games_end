@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_end/constants.dart';
-import 'package:games_end/screens/product/products_screen.dart';
+import 'package:games_end/screens/game/gamesScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {

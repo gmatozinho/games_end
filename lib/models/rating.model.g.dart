@@ -10,7 +10,7 @@ Rating _$RatingFromJson(Map<String, dynamic> json) {
   return Rating(
     json['id'] as int,
     json['count'] as int,
-    json['percent'] as int,
+    (json['percent'] as num)?.toDouble(),
     json['title'] as String,
   );
 }

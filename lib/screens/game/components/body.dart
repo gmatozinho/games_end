@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:games_end/components/search_box.dart';
 import 'package:games_end/constants.dart';
 import 'package:games_end/models/game.model.dart';
-import 'package:games_end/models/gamesPagination.model.dart';
 import 'package:games_end/screens/details/details_screen.dart';
-import 'package:games_end/screens/product/controllers/body.control.dart';
-import 'package:games_end/services/games.service.dart';
+import 'package:games_end/screens/game/controllers/body.control.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'category_list.dart';
-import 'product_card.dart';
+import 'gameCard.dart';
 
 class Body extends StatefulWidget {
   const Body();
@@ -43,7 +41,12 @@ class BodyState extends State<Body> {
       bottom: false,
       child: Column(
         children: <Widget>[
-          SearchBox(onChanged: (value) {}),
+          SearchBox(onChanged: (value) {
+            controller.name = value;
+            controller.pagination = null;
+            controller.data.clear();
+            controller.loadMore();
+          }),
           //CategoryList(),
           SizedBox(height: kDefaultPadding / 2),
           Expanded(
@@ -68,6 +71,8 @@ class BodyState extends State<Body> {
       ),
     );
   }
+
+  searchGame(String name) {}
 
   gamesList() {
     return StreamBuilder(

@@ -8,15 +8,16 @@ class BodyControl {
   Stream<List<Game>> stream;
   bool hasMore;
   int _pageSize;
+  String name = '';
   int page = 0;
   bool _isLoading;
-  List<Game> _data;
+  List<Game> data;
   StreamController<List<Game>> _controller;
-  GamesPagination _pagination;
+  GamesPagination pagination;
 
   BodyControl(int pageSize) {
     _pageSize = pageSize;
-    _data = List<Game>();
+    data = List<Game>();
     _controller = StreamController<List<Game>>.broadcast();
     _isLoading = false;
     stream = _controller.stream.map((List<Game> games) {
@@ -36,21 +37,21 @@ class BodyControl {
 
   Future<void> loadMore({bool clearCachedData = false}) async {
     if (clearCachedData) {
-      _data = List<Game>();
+      data = List<Game>();
       hasMore = true;
     }
     if (_isLoading || !hasMore) {
       return Future.value();
     }
     _isLoading = true;
-    if (_pagination == null) {
-      _pagination = await GamesService.list(_pageSize);
+    if (pagination == null) {
+      pagination = await GamesService.list(_pageSize, name: name);
     } else {
-      _pagination = await GamesService.list(_pageSize, next: _pagination.next);
+      pagination = await GamesService.list(_pageSize, next: pagination.next);
     }
     _isLoading = false;
-    _data.addAll(_pagination.results);
-    hasMore = (_pagination.next != null && _pagination.next.isNotEmpty);
-    _controller.add(_data);
+    data.addAll(pagination.results);
+    hasMore = (pagination.next != null && pagination.next.isNotEmpty);
+    _controller.add(data);
   }
 }

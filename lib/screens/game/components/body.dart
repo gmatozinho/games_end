@@ -24,7 +24,7 @@ class BodyState extends State<Body> {
 
   @override
   void initState() {
-    controller = new BodyControl(10);
+    controller = new BodyControl(5);
 
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
@@ -41,8 +41,8 @@ class BodyState extends State<Body> {
       bottom: false,
       child: Column(
         children: <Widget>[
-          SearchBox(onChanged: (value) {
-            controller.name = value;
+          SearchBox(onClick: (text) {
+            controller.name = text;
             controller.pagination = null;
             controller.data.clear();
             controller.loadMore();
@@ -71,8 +71,6 @@ class BodyState extends State<Body> {
       ),
     );
   }
-
-  searchGame(String name) {}
 
   gamesList() {
     return StreamBuilder(

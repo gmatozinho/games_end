@@ -1,16 +1,14 @@
-/* "genres":[
-            {
-               "id":4,
-               "name":"Action",
-               "slug":"action",
-               "games_count":92780,
-               "image_background":"https://media.rawg.io/media/games/929/9295e55ce69cf5337c567983cf8b4137.jpeg"
-            },
-            {
-               "id":59,
-               "name":"Massively Multiplayer",
-               "slug":"massively-multiplayer",
-               "games_count":2147,
-               "image_background":"https://media.rawg.io/media/screenshots/6d3/6d367773c06886535620f2d7fb1cb866.jpg"
-            }
-         ],  */
+import 'package:json_annotation/json_annotation.dart';
+
+part 'genre.model.g.dart';
+
+@JsonSerializable()
+class Genre {
+  final int id, games_count;
+  final String name, slug, image_background;
+
+  Genre(this.id, this.games_count, this.name, this.slug, this.image_background);
+
+  factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
+  Map<String, dynamic> toJson() => _$GenreToJson(this);
+}

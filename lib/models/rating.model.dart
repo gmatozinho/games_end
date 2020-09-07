@@ -1,14 +1,15 @@
-/* "ratings":[
-            {
-               "id":5,
-               "title":"exceptional",
-               "count":5,
-               "percent":83.33
-            },
-            {
-               "id":4,
-               "title":"recommended",
-               "count":1,
-               "percent":16.67
-            }
-         ],  */
+import 'package:json_annotation/json_annotation.dart';
+
+part 'rating.model.g.dart';
+
+@JsonSerializable()
+class Rating {
+  final int id, count, percent;
+
+  final String title;
+
+  Rating(this.id, this.count, this.percent, this.title);
+
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
+}

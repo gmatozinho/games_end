@@ -1,15 +1,15 @@
-/* "stores":[
-            {
-               "id":376421,
-               "store":{
-                  "id":1,
-                  "name":"Steam",
-                  "slug":"steam",
-                  "domain":"store.steampowered.com",
-                  "games_count":41769,
-                  "image_background":"https://media.rawg.io/media/games/929/9295e55ce69cf5337c567983cf8b4137.jpeg"
-               },
-               "url_en":"https://store.steampowered.com/app/1175930/",
-               "url_ru":""
-            }
-         ], */
+import 'package:json_annotation/json_annotation.dart';
+
+part 'store.model.g.dart';
+
+@JsonSerializable()
+class Store {
+  final int id, games_count;
+  final String name, slug, domain, image_background;
+
+  Store(this.id, this.games_count, this.name, this.slug, this.domain,
+      this.image_background);
+
+  factory Store.fromJson(Map<String, dynamic> json) => _$StoreFromJson(json);
+  Map<String, dynamic> toJson() => _$StoreToJson(this);
+}

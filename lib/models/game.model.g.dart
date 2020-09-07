@@ -25,14 +25,39 @@ Game _$GameFromJson(Map<String, dynamic> json) {
     user_game: json['user_game'] as String,
     saturated_color: json['saturated_color'] as String,
     dominant_color: json['dominant_color'] as String,
-    ratings: json['ratings'] as List,
-    platforms: json['platforms'] as List,
-    parent_platforms: json['parent_platforms'] as List,
-    genres: json['genres'] as List,
-    stores: json['stores'] as List,
-    tags: json['tags'] as List,
-    short_screenshots: json['short_screenshots'] as List,
-    added_by_status: json['added_by_status'],
+    ratings: (json['ratings'] as List)
+        ?.map((e) =>
+            e == null ? null : Rating.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    platforms: (json['platforms'] as List)
+        ?.map((e) =>
+            e == null ? null : PlatformInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    parent_platforms: (json['parent_platforms'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ParentPlatform.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    genres: (json['genres'] as List)
+        ?.map(
+            (e) => e == null ? null : Genre.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    stores: (json['stores'] as List)
+        ?.map((e) =>
+            e == null ? null : StoreInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    tags: (json['tags'] as List)
+        ?.map((e) => e == null ? null : Tag.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    short_screenshots: (json['short_screenshots'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ShortScrenshoot.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    added_by_status: json['added_by_status'] == null
+        ? null
+        : AddedByStatus.fromJson(
+            json['added_by_status'] as Map<String, dynamic>),
     clip: json['clip'],
     id: json['id'] as int,
   );
@@ -64,6 +89,6 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'stores': instance.stores,
       'tags': instance.tags,
       'short_screenshots': instance.short_screenshots,
-      'added_by_status': instance.added_by_status,
       'clip': instance.clip,
+      'added_by_status': instance.added_by_status,
     };

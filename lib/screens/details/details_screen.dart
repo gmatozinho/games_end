@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       appBar: buildAppBar(context),
       body: Body(
-        product: product,
+        game: product,
       ),
     );
   }

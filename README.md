@@ -6,7 +6,7 @@ Repository containing a flutter project of a list of games using: x. It also con
 
 ## Preview:
 
-![Alt Text](https://github.com/gmatozinho/games_end/tree/master/docs/app-preview.gif)
+![Preview](/docs/app-preview.gif)
 
 ## How to Run
 
